@@ -1,0 +1,57 @@
+{% extends 'home/base_generic.html' %}
+
+{% block main_content %}
+<main class="container my-5">
+    <h1 class="mb-4">Konular</h1>
+    <ul class="list-group">
+        {% for thread in page_obj %}
+        <li class="list-group-item mb-3">
+            <h2 class="h5">{{ thread.title }} <span class="badge bg-primary">(Puan: {{ thread.score }})</span></h2>
+            <p class="mb-1">{{ thread.content }}</p>
+            <p class="text-muted">{{ thread.user.username }} tarafından {{ thread.created_at | date:"Y-m-d H:i" }} da oluşturuldu.</p>
+        </li>
+        {% empty %}
+        <li class="list-group-item mb-3">Hiç bir konu bulunmuyor.</li>
+        {% endfor %}
+    </ul>
+    <nav aria-label="Sayfalama">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">İlk Sayfa</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Önceki Sayfa</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">İlk Sayfa</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Önceki Sayfa</span>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">Sayfa {{ page_obj.number }} (Toplam Sayfa {{ page_obj.paginator.num_pages }})</span>
+            </li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Sonraki Sayfa</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Son Sayfa</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Sonraki Sayfa</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Son Sayfa</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</main>
+{% endblock %}

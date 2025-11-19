@@ -1,0 +1,18 @@
+{% extends 'home/base_generic.html' %}
+
+{% block main_content %}
+<main class="container my-5">
+    <h1 class="mb-4">Konular</h1>
+    <ul class="list-group">
+        {% for thread in threads %}
+        <li class="list-group-item mb-3">
+            <h2 class="h5">{{ thread.title }} <span class="badge bg-primary">(Puan: {{ thread.score }})</span></h2>
+            <p class="mb-1">{{ thread.content }}</p>
+            <p class="text-muted">{{ thread.user.username }} tarafından oluşturuldu.</p>
+        </li>
+        {% empty %}
+        <li class="list-group-item mb-3">Hiç bir konu bulunmuyor.</li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}

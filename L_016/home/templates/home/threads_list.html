@@ -1,0 +1,76 @@
+{% extends 'home/base_generic.html' %}
+
+{% block main_content %}
+<main class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h4 mb-0">Konular</h2>
+        <a href="" class="btn btn-primary">Yeni Konu</a>
+    </div>
+    <div class="row">
+        {% for thread in page_obj %}
+        <div class="col-md-12 mb-4">
+            <a href="" class="text-decoration-none text-dark">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">{{ thread.title }}</h5>
+                            <small class="text-muted">{{ thread.created_at | date:"Y-m-d H:i" }}</small>
+                        </div>
+                        <p class="card-text my-3">{{ thread.content }}</p>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">{{ thread.user.username }} tarafından oluşturuldu.</small>
+                            <small class="text-muted">Puan: {{ thread.score }}</small>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <div class="col-md-12 mb-4">
+            <div class="alert alert-warning text-center">
+                Hiç bir konu bulunmuyor.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <nav aria-label="Sayfalama">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">İlk Sayfa</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Önceki Sayfa</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">İlk Sayfa</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Önceki Sayfa</span>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">Sayfa {{ page_obj.number }} (Toplam Sayfa {{ page_obj.paginator.num_pages }})</span>
+            </li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Sonraki Sayfa</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Son Sayfa</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Sonraki Sayfa</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Son Sayfa</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</main>
+{% endblock %}

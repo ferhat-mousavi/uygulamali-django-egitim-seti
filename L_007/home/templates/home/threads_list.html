@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<h1>Konular</h1>
+<ul>
+    {% for thread in threads %}
+    <li>
+        <h2>{{ thread.title }}</h2>
+        <p>{{ thread.content }}</p>
+    </li>
+    {% empty %}
+    <li>Hiç bir konu bulunmuyor.</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
